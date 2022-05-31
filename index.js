@@ -1,6 +1,8 @@
+//Instanciando variáveis
 let appHour = document.getElementById("appHour")
-var obj = document.querySelector("#chart");
+let obj = document.querySelector("#chart");
 let chart;
+let updateScreen = true;
 
 var options = {
     chart: {
@@ -13,25 +15,50 @@ var options = {
         }
     },
     series: [new Date().getSeconds(), new Date().getMinutes(), new Date().getHours(), new Date().getDate()],
-    labels: ['Segundos', 'Minutos', 'Horas', 'Dias']
+    labels: ['Dias', 'Horas', 'Minutos', 'Segundos']
 }
 
+//Instanciando os métodos
 chart = new ApexCharts(obj, options)
 chart.render()
-
 updateHour()
+loadObjects()
+
+//Definindo funções
+function enableUpdate(){
+    if (updateScreen) {
+        updateScreen = false
+    }
+    else{
+        updateScreen = true
+        loadObjects()
+    }
+}
+
+function loadObjects() {
+
+    chart.updateSeries([
+        new Date().getDate(),
+        new Date().getHours(),
+        new Date().getMinutes(), 
+        new Date().getSeconds()
+    ])
+
+
+    if (updateScreen) {
+        setTimeout(() => {
+            loadObjects()
+        }, 100);
+    }
+
+}
 
 function updateHour() {
     appHour.textContent = `Hora: ${this.setHour()}:${this.setMinutes()}:${this.setSeconds()}`
 
-    chart.updateSeries([
-        new Date().getSeconds(), new Date().getMinutes(), new Date().getHours(), new Date().getDate()
-    ])
-
     setTimeout(() => {
         updateHour()
     }, 1000);
-
 }
 
 function setHour() {
