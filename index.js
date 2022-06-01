@@ -62,22 +62,20 @@ function updateHour() {
 }
 
 function setHour() {
-    if (new Date().getHours().toString().length == 1)
-        return "0" + new Date().getHours();
-    else
-        return new Date().getHours();
+        return formatTime(new Date().getHours());
 }
 
 function setMinutes() {
-    if (new Date().getMinutes().toString().length == 1)
-        return "0" + new Date().getMinutes().toString();
-    else
-        return new Date().getMinutes().toString();
+        return formatTime(new Date().getMinutes().toString());
 }
 
 function setSeconds() {
-    if (new Date().getSeconds().toString().length == 1)
-        return "0" + new Date().getSeconds().toString();
+    return formatTime(new Date().getSeconds().toString())
+}
+
+function formatTime(obj){
+    if (obj.length == 1)
+        return "0" + obj;
     else
-        return new Date().getSeconds().toString();
+        return obj;
 }
